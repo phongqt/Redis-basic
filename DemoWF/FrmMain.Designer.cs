@@ -1,6 +1,6 @@
 ﻿namespace DemoWF
 {
-    partial class btnCacheAllBySEx
+    partial class FrmMain
     {
         /// <summary>
         /// Required designer variable.
@@ -36,17 +36,21 @@
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabRedisServiceStack = new System.Windows.Forms.TabPage();
             this.tabRedisStackExchange = new System.Windows.Forms.TabPage();
+            this.btnDecrement = new System.Windows.Forms.Button();
+            this.lblCounter = new System.Windows.Forms.Label();
+            this.btnIncr = new System.Windows.Forms.Button();
             this.txtIdSEx = new System.Windows.Forms.TextBox();
             this.btnGetByIdSEx = new System.Windows.Forms.Button();
             this.btnGetAllBySEx = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.btnIncr = new System.Windows.Forms.Button();
-            this.lblCounter = new System.Windows.Forms.Label();
-            this.btnDecrement = new System.Windows.Forms.Button();
+            this.tabMember = new System.Windows.Forms.TabPage();
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.btnRemoveMember = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabControl.SuspendLayout();
             this.tabRedisServiceStack.SuspendLayout();
             this.tabRedisStackExchange.SuspendLayout();
+            this.tabMember.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -103,6 +107,7 @@
             // 
             this.tabControl.Controls.Add(this.tabRedisServiceStack);
             this.tabControl.Controls.Add(this.tabRedisStackExchange);
+            this.tabControl.Controls.Add(this.tabMember);
             this.tabControl.Location = new System.Drawing.Point(4, 2);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
@@ -142,6 +147,37 @@
             this.tabRedisStackExchange.TabIndex = 1;
             this.tabRedisStackExchange.Text = "Stack Exchange";
             this.tabRedisStackExchange.UseVisualStyleBackColor = true;
+            // 
+            // btnDecrement
+            // 
+            this.btnDecrement.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDecrement.Location = new System.Drawing.Point(457, 74);
+            this.btnDecrement.Name = "btnDecrement";
+            this.btnDecrement.Size = new System.Drawing.Size(88, 47);
+            this.btnDecrement.TabIndex = 10;
+            this.btnDecrement.Text = "Decr";
+            this.btnDecrement.UseVisualStyleBackColor = true;
+            this.btnDecrement.Click += new System.EventHandler(this.btnDecrement_Click);
+            // 
+            // lblCounter
+            // 
+            this.lblCounter.AutoSize = true;
+            this.lblCounter.Location = new System.Drawing.Point(400, 84);
+            this.lblCounter.Name = "lblCounter";
+            this.lblCounter.Size = new System.Drawing.Size(20, 24);
+            this.lblCounter.TabIndex = 9;
+            this.lblCounter.Text = "0";
+            // 
+            // btnIncr
+            // 
+            this.btnIncr.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnIncr.Location = new System.Drawing.Point(306, 74);
+            this.btnIncr.Name = "btnIncr";
+            this.btnIncr.Size = new System.Drawing.Size(88, 47);
+            this.btnIncr.TabIndex = 8;
+            this.btnIncr.Text = "Incr";
+            this.btnIncr.UseVisualStyleBackColor = true;
+            this.btnIncr.Click += new System.EventHandler(this.btnIncr_Click);
             // 
             // txtIdSEx
             // 
@@ -183,45 +219,48 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // btnIncr
+            // tabMember
             // 
-            this.btnIncr.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnIncr.Location = new System.Drawing.Point(306, 74);
-            this.btnIncr.Name = "btnIncr";
-            this.btnIncr.Size = new System.Drawing.Size(88, 47);
-            this.btnIncr.TabIndex = 8;
-            this.btnIncr.Text = "Incr";
-            this.btnIncr.UseVisualStyleBackColor = true;
-            this.btnIncr.Click += new System.EventHandler(this.btnIncr_Click);
+            this.tabMember.Controls.Add(this.btnRemoveMember);
+            this.tabMember.Controls.Add(this.btnAdd);
+            this.tabMember.Location = new System.Drawing.Point(4, 22);
+            this.tabMember.Name = "tabMember";
+            this.tabMember.Padding = new System.Windows.Forms.Padding(3);
+            this.tabMember.Size = new System.Drawing.Size(625, 162);
+            this.tabMember.TabIndex = 2;
+            this.tabMember.Text = "Member";
+            this.tabMember.UseVisualStyleBackColor = true;
             // 
-            // lblCounter
+            // btnAdd
             // 
-            this.lblCounter.AutoSize = true;
-            this.lblCounter.Location = new System.Drawing.Point(400, 84);
-            this.lblCounter.Name = "lblCounter";
-            this.lblCounter.Size = new System.Drawing.Size(20, 24);
-            this.lblCounter.TabIndex = 9;
-            this.lblCounter.Text = "0";
+            this.btnAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAdd.Location = new System.Drawing.Point(6, 17);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(150, 47);
+            this.btnAdd.TabIndex = 9;
+            this.btnAdd.Text = "Add";
+            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
-            // btnDecrement
+            // btnRemoveMember
             // 
-            this.btnDecrement.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDecrement.Location = new System.Drawing.Point(457, 74);
-            this.btnDecrement.Name = "btnDecrement";
-            this.btnDecrement.Size = new System.Drawing.Size(88, 47);
-            this.btnDecrement.TabIndex = 10;
-            this.btnDecrement.Text = "Decr";
-            this.btnDecrement.UseVisualStyleBackColor = true;
-            this.btnDecrement.Click += new System.EventHandler(this.btnDecrement_Click);
+            this.btnRemoveMember.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRemoveMember.Location = new System.Drawing.Point(183, 17);
+            this.btnRemoveMember.Name = "btnRemoveMember";
+            this.btnRemoveMember.Size = new System.Drawing.Size(150, 47);
+            this.btnRemoveMember.TabIndex = 10;
+            this.btnRemoveMember.Text = "Remove";
+            this.btnRemoveMember.UseVisualStyleBackColor = true;
+            this.btnRemoveMember.Click += new System.EventHandler(this.btnRemoveMember_Click);
             // 
-            // btnCacheAllBySEx
+            // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(639, 463);
+            this.ClientSize = new System.Drawing.Size(636, 463);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.dataGridView1);
-            this.Name = "btnCacheAllBySEx";
+            this.Name = "FrmMain";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -230,6 +269,7 @@
             this.tabRedisServiceStack.PerformLayout();
             this.tabRedisStackExchange.ResumeLayout(false);
             this.tabRedisStackExchange.PerformLayout();
+            this.tabMember.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -251,6 +291,9 @@
         private System.Windows.Forms.Button btnIncr;
         private System.Windows.Forms.Label lblCounter;
         private System.Windows.Forms.Button btnDecrement;
+        private System.Windows.Forms.TabPage tabMember;
+        private System.Windows.Forms.Button btnAdd;
+        private System.Windows.Forms.Button btnRemoveMember;
     }
 }
 

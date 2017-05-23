@@ -4,8 +4,6 @@ using System;
 using System.Collections.Generic;
 using StackExchange.Redis.Extensions.Newtonsoft;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using StackExchange.Redis.Extensions.Core;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
@@ -170,7 +168,7 @@ namespace DemoWF.Helpers
             }
 
             BinaryFormatter binaryFormatter = new BinaryFormatter();
-            using ( Stream memoryStream = new MemoryStream(stream))
+            using (Stream memoryStream = new MemoryStream(stream))
             {
                 T result = (T)binaryFormatter.Deserialize(memoryStream);
                 memoryStream.Flush();
@@ -190,6 +188,71 @@ namespace DemoWF.Helpers
         {
             var cache = Connection.GetDatabase();
             cache.StringDecrement(key);
+        }
+
+        #endregion
+
+        #region Member
+        public static void SetMember<T>(string key, T value)
+        {
+            var cache = Connection.GetDatabase();
+            cache.SetAdd(key, Serialize(value));
+        }
+
+        public static List<T> GetMember<T>(string key)
+        {
+            List<T> list = new List<T>();
+            var cache = Connection.GetDatabase();
+            var values = cache.SetMembers(key).ToList();
+            foreach (var item in values)
+            {
+                list.Add(Deserialize<T>(item));
+            }
+
+            return list;
+        }
+
+        public static void RemoveMember<T>(string key, T value)
+        {
+            var cache = Connection.GetDatabase();
+            cache.SetRemove(key, Serialize(value));
+        }
+        #endregion
+
+        #region List
+        public static void AddListDefault<T>(string key, T value)
+        {
+            var cache = Connection.GetDatabase();            
+            cache.ListRightPush(key, JsonConvert.SerializeObject(value));
+        }
+
+        public static List<T> GetListDefault<T>(string key)
+        {
+            var list = new List<T>();
+            var cache = Connection.GetDatabase();
+            var values = cache.ListRange(key).ToList();
+            foreach (var item in values)
+            {
+                list.Add(JsonConvert.DeserializeObject<T>(item));
+            }
+            
+            return list;
+        }
+
+        public static void InsertIntoList<T>(string key, T value)
+        {
+            var cache = Connection.GetDatabase();
+            var list = cache.ListRange(key).ToList();
+            if (list.Count ==0)
+            {
+                AddListDefault(key, value);
+            }
+            
+        }
+
+        private static int FindIndex()
+        {
+            return 0;
         }
         #endregion
     }

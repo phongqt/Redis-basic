@@ -1,25 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using DemoWF.Models;
 using DemoWF.Helpers;
-using System.Reflection;
 
 namespace DemoWF
 {
-    public partial class btnCacheAllBySEx : Form
+    public partial class FrmMain : Form
     {
         List<Notification> notificationList = new List<Notification>();
         NotificationRepository notificationRepository = new NotificationRepository();
-        public btnCacheAllBySEx()
+        private string keyFriend = string.Concat("Friend:", LoginExtention.UserName);
+        private string keyNotification = string.Concat("Notification:", LoginExtention.UserName);
+        private string keyCounter = string.Concat("Counter:", LoginExtention.UserName);
+
+        public FrmMain()
         {
             InitializeComponent();
+            CenterToScreen();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -69,12 +69,12 @@ namespace DemoWF
 
         private void btnGetAllBySEx_Click(object sender, EventArgs e)
         {
-            var list = RedisStackExchangeHelper.GetList<Notification>("Me:notification");
+            var list = RedisStackExchangeHelper.GetList<Notification>(keyNotification);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            RedisStackExchangeHelper.SetList<Notification>("Me:notification", notificationList);
+            RedisStackExchangeHelper.SetList<Notification>(keyNotification, notificationList);
         }
 
         private void btnIncr_Click(object sender, EventArgs e)
@@ -88,22 +88,31 @@ namespace DemoWF
             {
                 LoadCounter();
             }
+
+            if (tabControl.SelectedIndex != 2)
+            {
+                GetAll();
+            }
+            else
+            {
+                GetAllMember();
+            }
         }
 
         private void LoadCounter(bool isIncre = true)
         {
             int count = 0;
-            var totalClick = RedisStackExchangeHelper.GetDefault("Counter:ClickBtn");
+            var totalClick = RedisStackExchangeHelper.GetDefault(keyCounter);
             int.TryParse(totalClick, out count);
             if (isIncre)
             {
                 if (count == 0)
                 {
-                    RedisStackExchangeHelper.Set("Counter:ClickBtn", 1);
+                    RedisStackExchangeHelper.Set(keyCounter, 1);
                 }
                 else
                 {
-                    RedisStackExchangeHelper.Increment("Counter:ClickBtn");
+                    RedisStackExchangeHelper.Increment(keyCounter);
                 }
 
                 count++;
@@ -112,7 +121,7 @@ namespace DemoWF
             {
                 if (count > 0)
                 {
-                    RedisStackExchangeHelper.Decrement("Counter:ClickBtn");
+                    RedisStackExchangeHelper.Decrement("Me:ClickBtn");
                 }
 
                 count--;
@@ -124,6 +133,41 @@ namespace DemoWF
         private void btnDecrement_Click(object sender, EventArgs e)
         {
             LoadCounter(false);
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            var user = new Member();
+            using (FrmAddMember frm = new FrmAddMember())
+            {
+                frm.ShowDialog();
+                user = frm._memer;
+                if (user != null)
+                {
+                    RedisStackExchangeHelper.AddListDefault(keyFriend, user);
+                    //RedisStackExchangeHelper.SetMember(keyFriend, user);
+                }
+
+                GetAllMember();
+            }
+        }
+
+        private void GetAllMember()
+        {
+            //var list = RedisStackExchangeHelper.GetMember<Member>(keyFriend);
+            var list = RedisStackExchangeHelper.GetListDefault<Member>(keyFriend); 
+            dataGridView1.DataSource = list;
+        }
+
+        private void btnRemoveMember_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.CurrentRow != null)
+            {
+                var dataSource = dataGridView1.DataSource as List<Member>;
+                var mem = dataSource[dataGridView1.CurrentRow.Index];
+                RedisStackExchangeHelper.RemoveMember(keyFriend, mem);
+                GetAllMember();
+            }
         }
     }
 
